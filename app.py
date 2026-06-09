@@ -57,8 +57,11 @@ st.markdown("""
 # ── Load & cache everything ───────────────────────────
 @st.cache_data(show_spinner=False)
 def load_data():
-    df = pd.read_csv('creditcard.csv')
-    return df
+    import kagglehub
+    import os
+    path = kagglehub.dataset_download('mlg-ulb/creditcardfraud')
+    csv_path = os.path.join(path, 'creditcard.csv')
+    return pd.read_csv(csv_path)
 
 @st.cache_resource(show_spinner=False)
 def train_models(df):
@@ -141,14 +144,8 @@ st.markdown("**End-to-end ML pipeline** | Logistic Regression · Random Forest �
 st.markdown("---")
 
 # ── Load data ─────────────────────────────────────────
-with st.spinner("Loading dataset..."):
-    try:
-        df = load_data()
-        data_loaded = True
-    except FileNotFoundError:
-        data_loaded = False
-        st.error("⚠️ `creditcard.csv` not found. Please place it in the same folder as `app.py`.")
-        st.stop()
+with st.spinner("Loading dataset from Kaggle..."):
+    df = load_data()
 
 with st.spinner("Training models... this takes ~2 minutes on first run (cached after that)"):
     (X_train, X_test, y_train, y_test,
