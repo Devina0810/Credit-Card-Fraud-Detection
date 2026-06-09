@@ -117,5 +117,5 @@ Credit-Card-Fraud-Detection/
 
 ## 👩‍💻 Author
 
-**Devina Saini** — CSE Student, IIIT Kota  
+**Devina Yadav** — CSE Student, IIIT Kota  
 [GitHub](https://github.com/Devina0810) · [Kaggle](https://kaggle.com/midnight1708)
