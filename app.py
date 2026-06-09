@@ -57,10 +57,13 @@ st.markdown("""
 # ── Load & cache everything ───────────────────────────
 @st.cache_data(show_spinner=False)
 def load_data():
-    import kagglehub
-    import os
-    path = kagglehub.dataset_download('mlg-ulb/creditcardfraud')
-    csv_path = os.path.join(path, 'creditcard.csv')
+    import gdown, os
+    csv_path = 'creditcard.csv'
+    if not os.path.exists(csv_path):
+        gdown.download(
+            'https://drive.google.com/uc?id=1HPXksvMfkTBCplb-klN_o3B2OQS2bDV_',
+            csv_path, quiet=False
+        )
     return pd.read_csv(csv_path)
 
 @st.cache_resource(show_spinner=False)
@@ -144,7 +147,7 @@ st.markdown("**End-to-end ML pipeline** | Logistic Regression · Random Forest �
 st.markdown("---")
 
 # ── Load data ─────────────────────────────────────────
-with st.spinner("Loading dataset from Kaggle..."):
+with st.spinner("Downloading dataset from Google Drive (first run only)..."):
     df = load_data()
 
 with st.spinner("Training models... this takes ~2 minutes on first run (cached after that)"):
